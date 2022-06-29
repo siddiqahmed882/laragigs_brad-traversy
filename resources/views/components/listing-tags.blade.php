@@ -1,7 +1,8 @@
 @props(['tags_csv'])
 
 @php
-  $tags = explode(',', $tags_csv);
+  $tags = (explode(',', $tags_csv));
+  $tags = array_map(fn($tag) => trim($tag), $tags);
 @endphp
 
 <ul class="flex">

@@ -3,6 +3,8 @@
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ListingController;
+use PhpParser\Node\Expr\List_;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,33 +17,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('listings', [
-        'listings' => Listing::all()
-    ]);
-});
+/** 
+ * Common Resource Routes - Naming convention
+ * index - show all entries
+ * show  - show single entry
+ * create - show form to create entry
+ * store - store new entry
+ * edit - show form to edit entry
+ * update - update the entry
+ * destroy - delete an entry
+*/
+
+// all listings
+Route::get('/', [ListingController::class, 'index']);
+
+// show create listing form
+Route::get('/listings/create', [ListingController::class, 'create']);
 
 // single listing
-Route::get('/listings/{id}', function($id) {
-    $listing = Listing::find($id);
-    if ($listing) {
-        return view('listing', [
-            'listing' => $listing,
-        ]);
-    }
-    abort(404);
-});
+Route::get('/listings/{id}', [ListingController::class, 'show']);
 
 /* 
-// Route Model binding
-// same as above
+// Route Model binding - same as above
 Route::get('/listings/{listing}', function(Listing $listing) {
     return view('listing', [
         'listing' => $listing,
     ]);
 });
 */
-
 
 /* 
 // returning strings, manipulating status codes and headers
