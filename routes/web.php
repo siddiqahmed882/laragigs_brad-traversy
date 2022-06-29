@@ -17,18 +17,30 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('listings', [
-        'title' => 'Latest Listings',
         'listings' => Listing::all()
     ]);
 });
 
+// single listing
 Route::get('/listings/{id}', function($id) {
-    return view('listing', [
-        'title' => 'Single Listing Page',
-        'listing' => Listing::find($id),
-    ]);
+    $listing = Listing::find($id);
+    if ($listing) {
+        return view('listing', [
+            'listing' => $listing,
+        ]);
+    }
+    abort(404);
 });
 
+/* 
+// Route Model binding
+// same as above
+Route::get('/listings/{listing}', function(Listing $listing) {
+    return view('listing', [
+        'listing' => $listing,
+    ]);
+});
+*/
 
 
 /* 

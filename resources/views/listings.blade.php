@@ -1,15 +1,17 @@
-<h1>{{$title}}</h1>
-<section>
-  @if (isset($listings) && count($listings) != 0)
-    @foreach($listings as $index => $listing)
-      <article id="listing-{{ $index + 1 }}">
-        <h2>
-          <a href="/listings/{{$listing['id']}}">{{ $listing['title'] }}</a>
-        </h2>
-        <p>{{ $listing['description'] }}</p>
-      </article>
-    @endforeach
-  @else
-    <p>No listings to be displayed...</p>
-  @endif
-</section>
+@extends('layout')
+
+@section('content')
+  @include('partials._hero')
+  @include('partials._search')
+  <div class="mx-4 gap-4 space-y-4 md:space-y-0 lg:grid lg:grid-cols-2">
+    @if (isset($listings) && count($listings) != 0)
+      @foreach ($listings as $index => $listing)
+        <x-listing-card :listing="$listing" />
+      @endforeach
+    @else
+      <p>No listings to be displayed...</p>
+    @endif
+  </div>
+@endsection
+
+{{-- to pass variable as prop, prefix the name with colon --}}
