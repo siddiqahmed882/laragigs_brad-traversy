@@ -5,34 +5,33 @@
     <x-card class="mx-auto mt-24 max-w-lg p-10">
       <header class="text-center">
         <h2 class="mb-1 text-2xl font-bold uppercase">
-          Create a Gig
+          Edit Gig
         </h2>
-        <p class="mb-4">Post a gig to find a developer</p>
+        <p class="mb-4">Edit: {{$listing->title}}</p>
       </header>
-      <form action="/listings" method="POST" enctype="multipart/form-data">
-        {{-- prevents cross site scripting --}}
+      <form action="/listings/{{$listing->id}}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="mb-6">
           <label for="company" class="mb-2 inline-block text-lg">Company Name</label>
           <input 
-            type="text"  
+            type="text" 
             class="w-full rounded border border-gray-200 p-2" 
             name="company" 
-            value="{{old('company')}}"
+            value="{{$listing->company}}" 
           />
           @error('company')
             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
           @enderror
         </div>
-
         <div class="mb-6">
           <label for="title" class="mb-2 inline-block text-lg">Job Title</label>
           <input 
             type="text" 
             class="w-full rounded border border-gray-200 p-2" 
             name="title"
-            value="{{old('title')}}"
             placeholder="Example: Senior Laravel Developer" 
+            value="{{$listing->title}}" 
           />
           @error('title')
             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
@@ -45,11 +44,11 @@
             type="text" 
             class="w-full rounded border border-gray-200 p-2" 
             name="location"
-            value="{{old('location')}}"
             placeholder="Example: Remote, Boston MA, etc" 
+            value="{{$listing->location}}" 
           />
           @error('location')
-            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+          <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
           @enderror
         </div>
 
@@ -58,11 +57,11 @@
           <input 
             type="text" 
             class="w-full rounded border border-gray-200 p-2" 
-            name="email" 
-            value="{{old('email')}}"
+            name="email"
+            value="{{$listing->email}}" 
           />
           @error('email')
-            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+          <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
           @enderror
         </div>
 
@@ -73,11 +72,11 @@
           <input 
             type="text" 
             class="w-full rounded border border-gray-200 p-2" 
-            name="website" 
-            value="{{old('website')}}"
+            name="website"
+            value="{{$listing->website}}" 
           />
           @error('website')
-            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+          <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
           @enderror
         </div>
 
@@ -89,11 +88,11 @@
             type="text" 
             class="w-full rounded border border-gray-200 p-2" 
             name="tags"
-            value="{{old('tags')}}"
             placeholder="Example: Laravel, Backend, Postgres, etc" 
+            value="{{$listing->tags}}" 
           />
           @error('tags')
-            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+          <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
           @enderror
         </div>
 
@@ -102,13 +101,17 @@
             Company Logo
           </label>
           <input 
-            type="file" 
+            type="file"  
             class="w-full rounded border border-gray-200 p-2" 
-            name="logo"
+            name="logo"   
           />
-          @error('logo')
-            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-          @enderror
+          @if($listing->logo)
+            <img 
+            class="mb-6 w-48" 
+            src="{{asset('storage/'.$listing->logo)}}"
+            alt="" 
+          />
+          @endif
         </div>
 
         <div class="mb-6">
@@ -121,19 +124,21 @@
             rows="10"
             placeholder="Include tasks, requirements, salary, etc"
           >
-            {{old('description')}}
+            {{$listing->description}}
           </textarea>
           @error('description')
-            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+          <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
           @enderror
         </div>
 
         <div class="mb-6">
-          <button class="bg-laravel rounded py-2 px-4 text-white hover:bg-black">
-            Create Gig
+          <button class="bg-laravel rounded py-2 px-4 text-lg text-white hover:bg-black">
+            Update Gig
           </button>
 
-          <a href="/" class="ml-4 text-black"> Back </a>
+          <a href="dashboard.html" class="ml-4 text-black">
+            Back
+          </a>
         </div>
       </form>
     </x-card>

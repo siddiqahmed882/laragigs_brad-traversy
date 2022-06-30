@@ -10,6 +10,7 @@
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
   <script>
     tailwind.config = {
       theme: {
@@ -46,6 +47,7 @@
     <p class="ml-2">Copyright &copy; 2022, All Rights reserved</p>
     <a href="/listings/create" class="absolute top-1/3 right-10 bg-black py-2 px-5 text-white">Post Job</a>
   </footer>
+  <x-flash-message />
 </body>
 
 </html>

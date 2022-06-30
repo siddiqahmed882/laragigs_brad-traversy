@@ -12,6 +12,9 @@
       <p>No listings to be displayed...</p>
     @endif
   </div>
+  <div class="mt-6 p-4">
+    {{$listings->links()}}
+  </div>
 @endsection
 
 {{-- to pass variable as prop, prefix the name with colon --}}
