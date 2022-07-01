@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Listing extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company', 'title', 'location', 'email', 'website', 'tags', 'description', 'logo'];
+    protected $fillable = ['company', 'title', 'location', 'email', 'website', 'tags', 'description', 'logo', 'user_id'];
 
     public function scopeFilter($query, array $filters) {
         if($filters['tag'] ?? false) {
@@ -21,5 +22,10 @@ class Listing extends Model
                 ->orWhere('description', 'like', '%' . $filters['search'] . '%')
                 ->orWhere('tags', 'like', '%' . $filters['search'] . '%');
         }
+    }
+
+    // relationship to user
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
